@@ -70,8 +70,8 @@ export default {
     }
     return {
       loginForm: {
-        socialCreditCode: 'admin',
-        password: '111111'
+        socialCreditCode: '91320200136349770P',
+        password: '163025'
       },
       loginRules: {
         socialCreditCode: [{ required: true, trigger: 'blur' }],

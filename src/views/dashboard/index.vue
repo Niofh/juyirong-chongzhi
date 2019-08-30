@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getAccountWalletDetail } from '../../api/account'
 
 export default {
   name: 'Dashboard',
@@ -13,14 +14,24 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  created() {
+    this.getAccountWalletDetail()
+  },
+  methods: {
+    getAccountWalletDetail() {
+      getAccountWalletDetail().then(res => {
+
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
+  .dashboard {
+    &-container {
 
+    }
   }
-}
 </style>
