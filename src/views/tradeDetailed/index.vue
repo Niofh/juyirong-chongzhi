@@ -1,5 +1,8 @@
 <template>
-  <div class="tradeDetailed-container">交易明细</div>
+  <div class="tradeDetailed-container container">
+    交易明细
+    <div></div>
+  </div>
 </template>
 
 <script>
