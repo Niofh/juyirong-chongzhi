@@ -9,11 +9,11 @@
 
         <div class="avatar-wrapper">
           <!--          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">-->
-          <div>admin <i class="el-icon-caret-bottom" /></div>
+          <div>{{ name }} <i class="el-icon-caret-bottom" /></div>
 
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-<!--          <el-dropdown-item>修改密码</el-dropdown-item>-->
+          <!--          <el-dropdown-item>修改密码</el-dropdown-item>-->
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出登录</span>
           </el-dropdown-item>
@@ -36,7 +36,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name'
     ])
   },
   methods: {

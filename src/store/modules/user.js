@@ -1,10 +1,11 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { getUserName, removeUserName } from '@/utils/auth'
 
 const state = {
   token: getToken(),
-  name: '',
+  name: getUserName(),
   avatar: ''
 }
 
@@ -63,6 +64,7 @@ const actions = {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         removeToken()
+        removeUserName()
         resetRouter()
         resolve()
       }).catch(error => {
