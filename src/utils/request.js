@@ -57,7 +57,7 @@ service.interceptors.response.use(
     console.log('err' + error) // for debug
     if (error) {
       const rs = error.response
-      if (rs.status === 401) {
+      if (rs && rs.status === 401) {
         MessageBox.confirm('登录信息已过期！', '提示', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
@@ -69,7 +69,7 @@ service.interceptors.response.use(
         })
       } else {
         Message({
-          message: error.message,
+          message: '网络超时',
           type: 'error',
           duration: 5 * 1000
         })

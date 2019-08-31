@@ -65,10 +65,29 @@ div:focus {
 }
 
 
-.tip {
+.my-tip {
   margin-top: 10px;
   padding: 8px 16px;
   background-color: #ecf8ff;
   border-radius: 4px;
   border-left: 5px solid #50bfff;
+}
+.my-table{
+  margin-top: 20px;
+}
+.my-page{
+  margin-top: 20px;
+  display: flex;
+  justify-content:flex-end;
+  .total{
+    margin-right: 50px;
+    line-height: 2em;
+    font-size: 14px;
+    span{
+      display: inline-block;
+      min-width: 100px;
+      margin: 0 30px 0 0;
+      text-align: left;
+    }
+  }
 }
