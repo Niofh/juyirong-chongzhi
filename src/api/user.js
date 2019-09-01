@@ -28,6 +28,6 @@ export function getInfo(token) {
 export function logout() {
   return request({
     url: '/renting/wallet/logout',
-    method: 'post'
+    method: 'get'
   })
 }

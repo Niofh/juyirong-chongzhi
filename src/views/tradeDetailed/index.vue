@@ -43,24 +43,33 @@
         border
         style="width: 100%"
       >
+        <el-table-column label="序号" type="index" width="50" />
         <el-table-column
-          prop="date"
-          label="日期"
+          prop="createTime"
+          label="创建时间"
           width="180"
         />
         <el-table-column
-          prop="name"
-          label="姓名"
-          width="180"
+          prop="orderId"
+          label="交易订单号"
         />
         <el-table-column
-          prop="address"
-          label="地址"
+          prop="businessType"
+          label="业务类型"
+        />
+
+        <el-table-column
+          prop="amount"
+          label="金额（元）"
+        />
+        <el-table-column
+          prop="status"
+          label="状态"
         />
       </el-table>
       <div class="my-page">
         <el-pagination
-          :page-sizes="page.pageSizeList"
+          :page-sizes="pageSizeList"
           :current-page="page.pageIndex"
           :page-size="page.pageSize"
           :total="page.total"
@@ -78,17 +87,13 @@
 import { endTimePickerOptions, startPickerOptions } from '@/utils/datePick'
 import dayjs from 'dayjs'
 import tableMixin from '@/mixins/tableMixin'
+import { accountDetailApi } from '@/api/account'
 
 export default {
   name: 'TradeDetailed',
   mixins: [tableMixin],
   data() {
     return {
-      page: {
-        pageIndex: 0,
-        pageSize: 10,
-        total: 100
-      },
       searchForm: {
         startTime: '',
         endTime: '',
@@ -104,26 +109,26 @@ export default {
           return endTimePickerOptions(this.searchForm.startTime, time)
         }
       },
-      dataList: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      dataList: []
     }
   },
+  created() {
+    this.getDataList()
+  },
   methods: {
+    getDataList() {
+      accountDetailApi({ ...this.searchForm, ...this.page }).then(res => {
+        if (res.status === this.$code) {
+          this.page.total = res.data.totalElements
+          this.dataList = res.data.content.map(item => {
+            return {
+              ...item,
+              amount: item.amount / 100
+            }
+          })
+        }
+      })
+    },
     onSubmit() {
       console.log('submit!')
     },

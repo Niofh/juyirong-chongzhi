@@ -3,8 +3,8 @@
 const tableMixin = {
   data() {
     return {
+      pageSizeList: [10, 20, 50, 100],
       page: {
-        pageSizeList: [10, 20, 50, 100],
         pageSize: 10,
         pageIndex: 1,
         total: 0
@@ -20,6 +20,7 @@ const tableMixin = {
     },
     // 分页, 每页条数
     handleSizeChange(size) {
+
       this.page.pageSize = size
       this.page.pageIndex = 1
       this.getDataList()

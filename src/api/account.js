@@ -17,3 +17,12 @@ export function accountRechargeApi(data) {
     data
   })
 }
+
+// 1.4交易明细
+export function accountDetailApi(data) {
+  return request({
+    url: '/renting/wallet/inexpDetail',
+    method: 'post',
+    data
+  })
+}
