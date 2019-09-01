@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setUserName } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { getUserName, removeUserName } from '@/utils/auth'
 
@@ -27,9 +27,14 @@ const actions = {
     const { socialCreditCode, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ socialCreditCode: socialCreditCode.trim(), password: password }).then(response => {
+        if (response.status !== 200) {
+          reject()
+          return
+        }
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
+        setUserName(socialCreditCode)
         resolve()
       }).catch(error => {
         reject(error)

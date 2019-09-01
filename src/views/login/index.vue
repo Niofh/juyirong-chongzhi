@@ -63,7 +63,7 @@
 
 <script>
 
-import {setUserName} from "../../utils/auth";
+import { setUserName } from '../../utils/auth'
 
 export default {
   name: 'Login',
@@ -115,7 +115,6 @@ export default {
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
-            setUserName(this.form.socialCreditCode)
           }).catch(() => {
             this.loading = false
           })

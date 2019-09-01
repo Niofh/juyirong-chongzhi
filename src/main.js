@@ -28,6 +28,7 @@ import '@/permission' // permission control
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
+Vue.prototype.$code = 200
 
 new Vue({
   el: '#app',
