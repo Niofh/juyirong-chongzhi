@@ -109,15 +109,12 @@ export default {
       })
     },
     handleLogin() {
-      this.$store.commit('')
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
-            setUserName(this.form.socialCreditCode)
           }).catch(() => {
             this.loading = false
           })

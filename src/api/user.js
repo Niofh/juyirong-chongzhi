@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { getUserName } from '../utils/auth'
 
 export function login(data) {
   return request({
@@ -9,10 +10,17 @@ export function login(data) {
 }
 
 export function getInfo(token) {
-  return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+  return new Promise((resolve, reject) => {
+    if (getUserName()) {
+      resolve({
+        data: {
+          name: getUserName(),
+          avatar: ''
+        }
+      })
+    } else {
+      reject()
+    }
   })
 }
 
