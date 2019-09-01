@@ -8,3 +8,12 @@ export function getAccountWalletDetail(data) {
     params: data
   })
 }
+
+// 1.3账户充值
+export function accountRechargeApi(data) {
+  return request({
+    url: '/renting/wallet/recharge',
+    method: 'post',
+    data
+  })
+}

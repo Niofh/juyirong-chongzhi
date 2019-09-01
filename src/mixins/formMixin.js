@@ -53,6 +53,7 @@ const formMixin = {
     // 表单验证成功
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
+        console.log(valid)
         if (valid) {
           this.loading = true
           this.$emit('submit', this.form)

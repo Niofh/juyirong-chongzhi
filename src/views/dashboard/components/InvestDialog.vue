@@ -9,7 +9,7 @@
       @close="close('ruleForm')"
     >
       <el-form ref="ruleForm" :model="form" :rules="rules">
-        <el-form-item label="充值金额：" :label-width="formLabelWidth">
+        <el-form-item label="充值金额：" :label-width="formLabelWidth" prop="amount">
           <el-input v-model="form.amount" autocomplete="off" />
         </el-form-item>
         <el-form-item label="特殊资源：" :label-width="formLabelWidth">
@@ -37,6 +37,8 @@
 
 <script>
 import formMixin from '@/mixins/formMixin'
+import { numberReg } from '@/utils/validate'
+import { accountRechargeApi } from '@/api/account'
 
 export default {
   name: 'InvestDialog',
@@ -44,13 +46,40 @@ export default {
   data() {
     return {
       rules: {
-        amount: []
+        amount: [
+          { required: true, message: '请输入金额', trigger: 'blur' },
+          { validator: numberReg, trigger: 'blur' }
+        ]
       },
       form: {
         payType: 1,
-        amount: ''
+        amount: '',
+        frontUrl: window.location.href
       },
       formLabelWidth: '120px'
+    }
+  },
+  inject: ['getAccountWalletDetail'],
+  methods: {
+    // 充值
+    accountRecharge() {
+      accountRechargeApi(this.form).then(res => {
+        if (res.status === this.$code) {
+          window.open(res.data)
+          this.$confirm('是否充值成功?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '再次充值',
+            type: 'warning'
+          }).then(() => {
+            this.closeModal('ruleForm')
+            this.getAccountWalletDetail()
+          }).catch(() => {
+
+          })
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
     }
   }
 }

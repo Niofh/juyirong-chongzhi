@@ -5,11 +5,11 @@
         <div slot="header" class="clearfix">
           <span>账户总余额（元）</span>
         </div>
-        <div class="body">23.66元</div>
+        <div class="body">{{ allAmount.toLocaleString('en-US') }}元</div>
         <el-button class="button" type="primary" @click="onOpen">充值</el-button>
       </el-card>
     </div>
-    <InvestDialog ref="investDialog" title="充值提示"></InvestDialog>
+    <InvestDialog ref="investDialog" title="充值提示" @submit="submitRechange" />
   </div>
 </template>
 
@@ -29,20 +29,35 @@ export default {
   },
   data() {
     return {
+      allAmount: 0
+    }
+  },
 
+  provide() {
+    return {
+      getAccountWalletDetail: this.getAccountWalletDetail
     }
   },
   created() {
+
     this.getAccountWalletDetail()
   },
   methods: {
     getAccountWalletDetail() {
       getAccountWalletDetail().then(res => {
-
+        if (res.status === this.$code) {
+          const { allAmount } = res.data
+          this.allAmount = allAmount / 100
+        } else {
+          this.$message.error(res.msg)
+        }
       })
     },
-    onOpen(){
+    onOpen() {
       this.$refs.investDialog.openModal()
+    },
+    submitRechange() {
+      this.$refs.investDialog.accountRecharge()
     }
   }
 }
