@@ -18,12 +18,23 @@
         <el-form-item label="充值金额：" :label-width="formLabelWidth" prop="amount">
           <el-input v-model="form.amount" autocomplete="off" />
         </el-form-item>
-        <template v-show="fee>0">
+        <template v-if="fee>0">
           <el-form-item label="提示：" :label-width="formLabelWidth">
             充值金额需包含手续费（<span style="color: red">{{ fee }}元</span>）<br>
             实际到账金额=充值金额-手续费
           </el-form-item>
         </template>
+        <template v-else>
+          <el-form-item v-if="form.payType===1" label="提示：" :label-width="formLabelWidth">
+            充值金额需包含手续费（充值金额*0.3%）<br>
+            实际到账金额=充值金额-手续费
+          </el-form-item>
+          <el-form-item v-if="form.payType===4" label="提示：" :label-width="formLabelWidth">
+            充值金额需包含手续费（充值金额包含手续费10元）<br>
+            实际到账金额=充值金额-手续费
+          </el-form-item>
+        </template>
+
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="closeModal('ruleForm')">取 消</el-button>
