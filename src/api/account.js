@@ -10,6 +10,15 @@ export function getAccountWalletDetail(data) {
   })
 }
 
+// 1.2充值试算
+
+export function rechargeTrialApi(data) {
+  return request({
+    url: '/renting/wallet/rechargeTrial',
+    method: 'post',
+    data
+  })
+}
 // 1.3账户充值
 export function accountRechargeApi(data) {
   return request({

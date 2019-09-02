@@ -86,6 +86,7 @@ export default {
     return {
       allAmount: 0,
       dataList: [],
+
       searchForm: {
         startTime: '',
         endTime: '',
