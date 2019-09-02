@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { getToken } from '@/utils/auth'
 
 // 1.6账户余额
 export function getAccountWalletDetail(data) {
@@ -25,4 +26,9 @@ export function accountDetailApi(data) {
     method: 'post',
     data
   })
+}
+
+// 1.5 导出
+export function exportDetailList(data) {
+  return process.env.VUE_APP_BASE_API + `/renting/wallet/exportDetailList/${getToken()}`
 }

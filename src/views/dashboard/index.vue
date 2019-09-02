@@ -11,6 +11,7 @@
     </div>
     <div class="my-table">
       <el-table
+        v-loading="dataListLoading"
         :data="dataList"
         border
         style="width: 100%"
@@ -28,7 +29,11 @@
         <el-table-column
           prop="businessType"
           label="业务类型"
-        />
+        >
+          <template slot-scope="scope">
+            {{ scope.row.businessType | businessTypeFilter }}
+          </template>
+        </el-table-column>
 
         <el-table-column
           prop="amount"
@@ -37,7 +42,11 @@
         <el-table-column
           prop="status"
           label="状态"
-        />
+        >
+          <template slot-scope="scope">
+            {{ scope.row.status===1?'已完成':'' }}
+          </template>
+        </el-table-column>
       </el-table>
       <div class="my-page">
         <el-pagination
@@ -97,6 +106,7 @@ export default {
   },
   methods: {
     getDataList() {
+      this.dataListLoading = true
       accountDetailApi({ ...this.searchForm, ...this.page }).then(res => {
         if (res.status === this.$code) {
           this.page.total = res.data.totalElements
@@ -107,13 +117,15 @@ export default {
             }
           })
         }
+      }).finally(() => {
+        this.dataListLoading = false
       })
     },
     getAccountWalletDetail() {
       getAccountWalletDetail().then(res => {
         if (res.status === this.$code) {
-          const { allAmount } = res.data
-          this.allAmount = allAmount / 100
+          const { allAmount, freezenAmount } = res.data
+          this.allAmount = (allAmount - freezenAmount) / 100
         } else {
           this.$message.error(res.msg)
         }
